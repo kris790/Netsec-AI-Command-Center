@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ScanVisualizer } from './components/ScanVisualizer';
 import { AnalysisDashboard } from './components/AnalysisDashboard';
 import { CyberButton } from './components/CyberButton';
@@ -6,7 +6,7 @@ import { ScriptModal } from './components/ScriptModal';
 import { ThemeToggle } from './components/ThemeToggle';
 import { useTheme } from './contexts/ThemeContext';
 import { AppTab, PortResult } from './types';
-import { Terminal, Shield, Radio, LayoutDashboard, AlertCircle, Code, Download } from 'lucide-react';
+import { Terminal, Shield, Radio, LayoutDashboard, AlertCircle, Code } from 'lucide-react';
 import { generateSimulationData } from './services/geminiService';
 import { PYTHON_SCANNER_SCRIPT } from './utils/pythonScript';
 
@@ -18,6 +18,9 @@ export default function App() {
   const [generatedLog, setGeneratedLog] = useState<string | null>(null);
   const [isScriptModalOpen, setIsScriptModalOpen] = useState(false);
 
+  // Ref to hold the interval ID for cleanup
+  const scanIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
   // Apply theme class to body when theme changes
   useEffect(() => {
     if (theme === 'high-contrast') {
@@ -27,8 +30,22 @@ export default function App() {
     }
   }, [theme]);
 
+  // Cleanup scan interval on unmount
+  useEffect(() => {
+    return () => {
+      if (scanIntervalRef.current) {
+        clearInterval(scanIntervalRef.current);
+      }
+    };
+  }, []);
+
   // Simulates the Port Scanner Logic (Since browsers can't really scan ports)
   const handleStartSimulation = async () => {
+    // Clear any existing interval
+    if (scanIntervalRef.current) {
+      clearInterval(scanIntervalRef.current);
+    }
+
     setIsScanning(true);
     setScanResults([]);
     setGeneratedLog(null);
@@ -42,22 +59,25 @@ export default function App() {
     ];
 
     let foundCount = 0;
-    const interval = setInterval(() => {
+    
+    scanIntervalRef.current = setInterval(() => {
         if (foundCount < mockPorts.length) {
             setScanResults(prev => [...prev, mockPorts[foundCount]]);
             foundCount++;
         } else {
-            clearInterval(interval);
+            if (scanIntervalRef.current) {
+                clearInterval(scanIntervalRef.current);
+            }
             finishSimulation();
         }
     }, 1200);
+  };
 
-    const finishSimulation = async () => {
-        setIsScanning(false);
-        // Generate a fun log for the user to copy
-        const log = await generateSimulationData();
-        setGeneratedLog(log);
-    };
+  const finishSimulation = async () => {
+    setIsScanning(false);
+    // Generate a fun log for the user to copy
+    const log = await generateSimulationData();
+    setGeneratedLog(log);
   };
 
   return (
