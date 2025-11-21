@@ -1,0 +1,5 @@
+{
+  "name": "NetSec AI Command Center",
+  "description": "A cyberpunk-styled security dashboard that simulates port scanning for demonstration and utilizes Gemini AI to analyze real network logs (nmap/python scripts) for vulnerabilities.",
+  "requestFramePermissions": []
+}
