@@ -1,35 +1,45 @@
-# NetSec AI Command Center 🛡️
+# NetSec AI Command Center v2.0 🛡️
 
-A cyberpunk-styled security dashboard that combines a port scan simulator with real-world log analysis powered by **Google Gemini 2.5 Flash**.
+A cyberpunk-styled security dashboard that combines a configurable port scan simulator with a conversational AI Consultant powered by **Google Gemini 2.5 Flash**.
 
 ![Status](https://img.shields.io/badge/Status-Online-success)
+![Version](https://img.shields.io/badge/Version-2.0-cyan)
 ![AI](https://img.shields.io/badge/AI-Gemini%202.5-blue)
-![Theme](https://img.shields.io/badge/Theme-Cyberpunk-purple)
 
-## 🚀 Features
+## 🚀 What's New in v2.0
 
-### 1. Port Scan Simulator
-- **Visualizer**: Real-time visualization of network port traversing using a grid system.
-- **Simulation**: mimics a stealth SYN scan on a target IP (192.168.1.x).
-- **Log Generation**: Automatically generates a realistic "Python script" output log using Gemini AI for testing the analyzer.
+- **🗣️ Interactive AI Consultant**: The analyzer is no longer static. Have a full conversation with the AI to ask follow-up questions about specific vulnerabilities (e.g., *"How do I patch CVE-2024-XXXX on Windows?"*).
+- **⚙️ Configurable Scans**: Set custom Target IPs and choose between **Stealth**, **Aggressive**, or **Full Range** scan profiles to simulate different network noise levels.
+- **🕒 Operation History**: A new sidebar tracks your recent scan sessions and risk scores.
 
-### 2. AI Log Analyzer
-- **Vulnerability Assessment**: Pasting raw logs (Nmap, Python scripts, etc.) triggers a Gemini AI analysis.
-- **Risk Scoring**: Calculates a risk score (0-100) based on open ports and banners.
-- **Actionable Insights**: Provides specific hardening recommendations (e.g., "Disable Telnet," "Update RDP creds").
+## ✨ Core Features
 
-### 3. Integrated Python Tooling
-- Includes a fully functional, professional-grade **Python Port Scanner (`port_scanner.py`)**.
-- Users can view, copy, and download the script directly from the UI to run on local networks.
+### 1. Advanced Port Scan Simulator
+- **Visualizer**: Real-time "Hollywood-style" grid visualization of network port traversing.
+- **Profiles**:
+  - **Stealth**: Simulates a slow, quiet scan to avoid IDS detection.
+  - **Aggressive**: Fast, noisy scan that detects more services but raises alarms.
+  - **Full Range**: Simulates scanning all 65,535 ports.
+- **Log Generation**: Automatically generates realistic output logs (nmap/python style) for testing the analyzer.
 
-### 4. Accessibility
-- **High-Contrast Mode**: A dedicated toggle to switch from the aesthetic Cyberpunk theme to a high-visibility, pure black-and-white mode for better readability in bright environments.
+### 2. Intelligent Log Analysis & Chat
+- **Vulnerability Assessment**: Paste raw logs (Nmap, Python scripts, etc.) to get a scored risk assessment (0-100).
+- **Conversational Interface**: After the initial report, chat with **NetSec AI** to get specific commands, remediation steps, or educational context about the findings.
+
+### 3. Professional Python Tooling
+- Includes a fully functional **Python Port Scanner (`port_scanner.py`)**.
+- View source code directly in the app, copy it, or download it to run on local networks for legitimate security testing.
+
+### 4. Accessibility & Theming
+- **Cyberpunk Mode**: The default immersive interface with CRT flickers and neon glow.
+- **High-Contrast Mode**: A dedicated toggle for high-visibility, pure black-and-white UI for better readability in bright environments.
 
 ## 🛠️ Tech Stack
 
 - **Frontend**: React 19, TypeScript
-- **Styling**: Tailwind CSS (Custom Config)
-- **AI Integration**: Google GenAI SDK (`@google/genai`)
+- **Styling**: Tailwind CSS (Custom Configuration)
+- **AI Engine**: Google GenAI SDK (`@google/genai`)
+- **State Management**: React Context & Hooks
 - **Icons**: Lucide React
 
 ## 📦 Installation
@@ -46,36 +56,36 @@ A cyberpunk-styled security dashboard that combines a port scan simulator with r
 
 3. Set up your environment:
    - You need a valid Google Gemini API Key.
-   - Set it in your environment variables as `API_KEY`.
+   - Set it in your environment variables as `API_KEY` or strictly follow the recommended secure injection method for your deployment platform.
 
 4. Run the development server:
    ```bash
    npm start
    ```
 
-## 🖥️ Usage
+## 🖥️ Usage Guide
 
-### The Simulator
-1. Navigate to the **SCAN SIMULATOR** tab.
-2. Click **START SIMULATION**.
-3. Watch the visualizer traverse ports.
-4. Once complete, a log is generated. Click **COPY TO ANALYZER**.
+### The Active Scanner
+1. Go to the **OPS_CENTER** tab.
+2. Enter a **Target IP** and select a **Profile** (e.g., *Aggressive*).
+3. Click **INITIATE SCAN**.
+4. Watch the visualizer. Once complete, click **SEND TO INTEL ANALYZER**.
 
-### The Analyzer
-1. Navigate to the **LOG ANALYZER** tab.
-2. Paste network logs into the input area.
-   - *Tip: You can use the output from the built-in Python script or standard Nmap output.*
-3. Click **INITIATE AI ANALYSIS**.
-4. Review the Risk Score, Vulnerabilities, and Recommendations.
+### The Intel Analyzer
+1. Go to the **INTEL_ANALYSIS** tab.
+2. Review the initial **Risk Score** and **Vulnerabilities**.
+3. Use the chat window on the right to ask the AI questions like:
+   - *"What is the command to close port 23 on Linux?"*
+   - *"Explain why having RDP open to the internet is dangerous."*
 
-### Running the Python Script
-1. Click **GET PYTHON SCANNER SCRIPT** on the Simulator tab.
-2. Copy the code.
-3. Save it as `port_scanner.py` on your local machine.
-4. Run it:
+### Real-World Scanning
+1. Click **View Source** next to the scan button.
+2. Copy the Python script code.
+3. Run it on your terminal:
    ```bash
    python3 port_scanner.py -t localhost
    ```
+4. Paste the output back into the Web App's Analyzer for an AI report.
 
 ## ⚠️ Legal Disclaimer
 
